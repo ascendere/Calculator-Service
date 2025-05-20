@@ -2,19 +2,20 @@
     <div id="logo-container" (click)="navegar('')">
         <img src="/assets/logo.png" alt="logo" class="logo-image">
     </div>
-    
+
     <div id="tabs-container">
-        <div class="tab" 
-             (click)="navegar('')" 
+        <div class="tab"
+             (click)="navegar('')"
              [ngClass]="{seleccionado: seleccionado[0]}"
              role="button">
             <mat-icon>home</mat-icon> Principal
         </div>
-        <div class="tab" 
-             (click)="navegar('seguridad-higiene')" 
+        <div class="tab"
+             (click)="navegar('seguridad-higiene')"
              [ngClass]="{seleccionado: seleccionado[2]}"
              role="button">
-            <mat-icon>security</mat-icon> Seguridad e Higiene
+            <mat-icon>security</mat-icon> Seguridad Industrial
         </div>
+
     </div>
 </div>

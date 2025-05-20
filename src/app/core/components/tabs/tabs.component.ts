@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router } from '@angular/router';
 
@@ -12,6 +12,7 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class TabsComponent {
   seleccionado = [false, false, false];
+  lastScrollTop = 0; // Nueva variable para rastrear posición de scroll
 
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
@@ -36,5 +37,32 @@ export class TabsComponent {
 
   navegar(direccion: string): void {
     this.router.navigate([direccion]);
+  }
+
+  // Agrega el HostListener para detectar eventos de scroll
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const container = document.getElementById('container');
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    // Si el scroll es mayor a 100px, aplicamos efectos
+    if (scrollTop > 100) {
+      // Scroll hacia abajo: ocultamos el menú
+      if (scrollTop > this.lastScrollTop) {
+        container?.classList.add('scroll-down');
+        container?.classList.remove('scroll-up');
+      }
+      // Scroll hacia arriba: mostramos el menú
+      else {
+        container?.classList.add('scroll-up');
+        container?.classList.remove('scroll-down');
+      }
+    } else {
+      // Cerca del top, estado normal
+      container?.classList.remove('scroll-down');
+      container?.classList.remove('scroll-up');
+    }
+
+    this.lastScrollTop = scrollTop;
   }
 }
